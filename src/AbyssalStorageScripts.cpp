@@ -247,7 +247,7 @@ public:
         if (res != SPELL_CAST_OK)
             return;
 
-        Unit* caster = spell->GetCaster();
+        Unit* caster = spell->GetCaster() ? spell->GetCaster()->ToUnit() : nullptr;
         if (!caster || !caster->IsPlayer())
             return;
 
