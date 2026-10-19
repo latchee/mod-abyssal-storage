@@ -162,6 +162,10 @@ end
 -- Event Frame
 -- ============================================================================
 
+if RegisterAddonMessagePrefix then
+    RegisterAddonMessagePrefix(AbyssalStorage.PREFIX)
+end
+
 local eventFrame = CreateFrame("Frame", "AbyssalStorageEventFrame", UIParent)
 eventFrame:RegisterEvent("CHAT_MSG_ADDON")
 eventFrame:RegisterEvent("PLAYER_LOGIN")
@@ -173,7 +177,7 @@ eventFrame:SetScript("OnEvent", function(self, event, arg1, arg2, ...)
             AbyssalStorage:HandleMessage(arg2)
         end
     elseif event == "PLAYER_LOGIN" then
-        -- Server sends sync on login automatically
+        AbyssalStorage:RequestSync()
     end
 end)
 
@@ -191,6 +195,9 @@ SlashCmdList["ABYSSAL"] = function(msg)
             else
                 AbyssalStorageFrame:Show()
                 AbyssalStorage:UpdateUI()
+                if AbyssalStorage.UpdateUI then
+                    AbyssalStorage:UpdateUI()
+                end
             end
         end
     elseif msg == "deposit" then
